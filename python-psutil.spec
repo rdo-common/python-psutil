@@ -118,8 +118,8 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Sat Mar 27 2010 ELMORABITY Mohamed <melmorabity@fedoraproject.org> 0.1.3-1
 - Update to 0.1.3
-- Remove useless call to 2to3 and the corresponding BuildRequires python2-tools
-  (this version supports Python 3)
+- Remove useless call to 2to3 and corresponding BuildRequires
+  python2-tools
 
 * Sat Feb 20 2010 ELMORABITY Mohamed <melmorabity@fedoraproject.org> 0.1.2-4
 - Change python-utils BuildRequires for python2-utils
