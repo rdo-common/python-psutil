@@ -7,8 +7,8 @@
 %global short_name psutil
 
 Name:           python-psutil
-Version:        0.1.2
-Release:        4%{?dist}
+Version:        0.1.3
+Release:        1%{?dist}
 Summary:        A process utilities module for Python
 
 Group:          Development/Languages
@@ -20,7 +20,6 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python2-devel
 %if 0%{?with_python3}
-BuildRequires:  python2-tools
 BuildRequires:  python3-devel
 %endif
 
@@ -49,7 +48,7 @@ task manager.
 
 # Remove shebangs
 pushd psutil
-for file in _psbsd.py _pslinux.py _psmswindows.py _psosx.py _psutil.py; do
+for file in __init__.py _psbsd.py _pslinux.py _psmswindows.py _psosx.py; do
   sed -i.orig -e 1d $file && \
   touch -r $file.orig $file && \
   rm $file.orig
@@ -65,14 +64,9 @@ done
 
 chmod a-x docs/class_diagram.png
 
-rm docs/.DS_Store
-
-
 %if 0%{?with_python3}
-cp -rp . %{py3dir}
-pushd %{py3dir}
-2to3 --nobackups --write .
-popd
+rm -rf %{py3dir}
+cp -a . %{py3dir}
 %endif
 
 
@@ -122,6 +116,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Mar 27 2010 ELMORABITY Mohamed <melmorabity@fedoraproject.org> 0.1.3-1
+- Update to 0.1.3
+- Remove useless call to 2to3 and the corresponding BuildRequires python2-tools
+  (this version supports Python 3)
+
 * Sat Feb 20 2010 ELMORABITY Mohamed <melmorabity@fedoraproject.org> 0.1.2-4
 - Change python-utils BuildRequires for python2-utils
 
