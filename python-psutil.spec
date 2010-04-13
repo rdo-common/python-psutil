@@ -8,7 +8,7 @@
 
 Name:           python-psutil
 Version:        0.1.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A process utilities module for Python
 
 Group:          Development/Languages
@@ -76,6 +76,7 @@ cp -a . %{py3dir}
 %if 0%{?with_python3}
 pushd %{py3dir}
 %{__python3} setup.py build
+popd
 %endif
 
 
@@ -116,10 +117,13 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Apr 13 2010 ELMORABITY Mohamed <melmorabity@fedoraproject.org> 0.1.3-2
+- Add missing popd in %%build
+
 * Sat Mar 27 2010 ELMORABITY Mohamed <melmorabity@fedoraproject.org> 0.1.3-1
 - Update to 0.1.3
 - Remove useless call to 2to3 and corresponding BuildRequires
-  python2-tools
+  python2-tools (this version supports Python 3)
 
 * Sat Feb 20 2010 ELMORABITY Mohamed <melmorabity@fedoraproject.org> 0.1.2-4
 - Change python-utils BuildRequires for python2-utils
