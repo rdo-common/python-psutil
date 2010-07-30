@@ -8,7 +8,7 @@
 
 Name:           python-psutil
 Version:        0.1.3
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A process utilities module for Python
 
 Group:          Development/Languages
@@ -117,6 +117,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jul 30 2010 Thomas Spura <tomspur@fedoraproject.org> - 0.1.3-4
+- bump, because previous build nvr already existed in F-14
+
 * Thu Jul 22 2010 David Malcolm <dmalcolm@redhat.com> - 0.1.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Features/Python_2.7/MassRebuild
 
