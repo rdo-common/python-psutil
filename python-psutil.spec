@@ -7,8 +7,8 @@
 %global short_name psutil
 
 Name:           python-psutil
-Version:        0.1.3
-Release:        5%{?dist}
+Version:        0.2.0
+Release:        1%{?dist}
 Summary:        A process utilities module for Python
 
 Group:          Development/Languages
@@ -47,21 +47,13 @@ task manager.
 %setup -q -n %{short_name}-%{version}
 
 # Remove shebangs
-pushd psutil
-for file in __init__.py _psbsd.py _pslinux.py _psmswindows.py _psosx.py; do
+for file in psutil/*.py; do
   sed -i.orig -e 1d $file && \
   touch -r $file.orig $file && \
   rm $file.orig
 done
-popd
 
-# Remove DOS line endings
-for file in HISTORY LICENSE README; do
-  sed 's|\r||g' $file > $file.new && \
-  touch -r $file $file.new && \
-  mv $file.new $file
-done
-
+# Fix permissions
 chmod a-x docs/class_diagram.png
 
 %if 0%{?with_python3}
@@ -102,7 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc HISTORY LICENSE README docs
+%doc CREDITS HISTORY LICENSE README docs
 %{python_sitelib}/%{short_name}
 %{python_sitelib}/*.egg-info
 
@@ -110,13 +102,16 @@ rm -rf $RPM_BUILD_ROOT
 %if 0%{?with_python3}
 %files -n python3-psutil
 %defattr(-,root,root,-)
-%doc HISTORY LICENSE README docs
+%doc CREDITS HISTORY LICENSE README docs
 %{python3_sitelib}/%{short_name}
 %{python3_sitelib}/*.egg-info
 %endif
 
 
 %changelog
+* Mon Nov 22 2010 Mohamed El Morabity <melmorabity@fedoraproject.org> - 0.2.0-1
+- Update to 0.2.0
+
 * Wed Aug 25 2010 Thomas Spura <tomspur@fedoraproject.org> - 0.1.3-5
 - rebuild with python3.2
   http://lists.fedoraproject.org/pipermail/devel/2010-August/141368.html
