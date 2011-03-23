@@ -1,23 +1,22 @@
-%if 0%{?fedora} > 12
 %global with_python3 1
-%else
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
-%endif
-
 %global short_name psutil
 
+# Filter Python modules from Provides
+%{?filter_setup:
+%filter_provides_in %{python_sitearch}/.*\.so$
+%filter_setup
+}
+
 Name:           python-psutil
-Version:        0.2.0
-Release:        2%{?dist}
+Version:        0.2.1
+Release:        1%{?dist}
 Summary:        A process utilities module for Python
 
 Group:          Development/Languages
 License:        BSD
 URL:            http://psutil.googlecode.com/
 Source0:        http://psutil.googlecode.com/files/%{short_name}-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildArch:      noarch
 BuildRequires:  python2-devel
 %if 0%{?with_python3}
 BuildRequires:  python3-devel
@@ -63,6 +62,7 @@ cp -a . %{py3dir}
 
 
 %build
+export CFLAGS="$RPM_OPT_FLAGS"
 %{__python} setup.py build
 
 %if 0%{?with_python3}
@@ -73,8 +73,6 @@ popd
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
-
 %{__python} setup.py install \
   --skip-build \
   --root $RPM_BUILD_ROOT
@@ -88,27 +86,29 @@ popd
 %endif
 
  
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-
 %files
 %defattr(-,root,root,-)
 %doc CREDITS HISTORY LICENSE README docs
-%{python_sitelib}/%{short_name}
-%{python_sitelib}/*.egg-info
+%{python_sitearch}/%{short_name}/
+%{python_sitearch}/*.egg-info
+%{python_sitearch}/*.so
 
 
 %if 0%{?with_python3}
 %files -n python3-psutil
 %defattr(-,root,root,-)
 %doc CREDITS HISTORY LICENSE README docs
-%{python3_sitelib}/%{short_name}
-%{python3_sitelib}/*.egg-info
+%{python3_sitearch}/%{short_name}/
+%{python3_sitearch}/*.egg-info
+%{python3_sitearch}/*.so
 %endif
 
 
 %changelog
+* Wed Mar 23 2011 Mohamed El Morabity <melmorabity@fedoraproject.org> - 0.2.1-1
+- Update to 0.2.1
+- Spec cleanup
+
 * Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.2.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
