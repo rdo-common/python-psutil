@@ -8,7 +8,7 @@
 }
 
 Name:           python-psutil
-Version:        0.2.1
+Version:        0.3.0
 Release:        1%{?dist}
 Summary:        A process utilities module for Python
 
@@ -52,9 +52,6 @@ for file in psutil/*.py; do
   rm $file.orig
 done
 
-# Fix permissions
-chmod a-x docs/class_diagram.png
-
 %if 0%{?with_python3}
 rm -rf %{py3dir}
 cp -a . %{py3dir}
@@ -62,7 +59,7 @@ cp -a . %{py3dir}
 
 
 %build
-export CFLAGS="$RPM_OPT_FLAGS"
+export CFLAGS=$RPM_OPT_FLAGS
 %{__python} setup.py build
 
 %if 0%{?with_python3}
@@ -88,7 +85,7 @@ popd
  
 %files
 %defattr(-,root,root,-)
-%doc CREDITS HISTORY LICENSE README docs
+%doc CREDITS HISTORY LICENSE README docs/
 %{python_sitearch}/%{short_name}/
 %{python_sitearch}/*.egg-info
 %{python_sitearch}/*.so
@@ -97,7 +94,7 @@ popd
 %if 0%{?with_python3}
 %files -n python3-psutil
 %defattr(-,root,root,-)
-%doc CREDITS HISTORY LICENSE README docs
+%doc CREDITS HISTORY LICENSE README docs/
 %{python3_sitearch}/%{short_name}/
 %{python3_sitearch}/*.egg-info
 %{python3_sitearch}/*.so
@@ -105,6 +102,9 @@ popd
 
 
 %changelog
+* Mon Jul 18 2011 Mohamed El Morabity <melmorabity@fedoraproject.org> - 0.3.0-1
+- Update to 0.3.0
+
 * Wed Mar 23 2011 Mohamed El Morabity <melmorabity@fedoraproject.org> - 0.2.1-1
 - Update to 0.2.1
 - Spec cleanup
