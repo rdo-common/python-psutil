@@ -8,7 +8,7 @@
 }
 
 Name:           python-psutil
-Version:        0.3.0
+Version:        0.4.0
 Release:        1%{?dist}
 Summary:        A process utilities module for Python
 
@@ -52,6 +52,9 @@ for file in psutil/*.py; do
   rm $file.orig
 done
 
+# Fix permissions
+chmod a-x docs/class_diagram.png
+
 %if 0%{?with_python3}
 rm -rf %{py3dir}
 cp -a . %{py3dir}
@@ -59,12 +62,11 @@ cp -a . %{py3dir}
 
 
 %build
-export CFLAGS=$RPM_OPT_FLAGS
-%{__python} setup.py build
+CFLAGS=$RPM_OPT_FLAGS %{__python} setup.py build
 
 %if 0%{?with_python3}
 pushd %{py3dir}
-%{__python3} setup.py build
+CFLAGS=$RPM_OPT_FLAGS %{__python3} setup.py build
 popd
 %endif
 
@@ -102,6 +104,9 @@ popd
 
 
 %changelog
+* Sun Nov 20 2011 Mohamed El Morabity <melmorabity@fedoraproject.org> - 0.4.0-1
+- Update to 0.4.0
+
 * Mon Jul 18 2011 Mohamed El Morabity <melmorabity@fedoraproject.org> - 0.3.0-1
 - Update to 0.3.0
 
