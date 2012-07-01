@@ -8,8 +8,8 @@
 }
 
 Name:           python-psutil
-Version:        0.4.1
-Release:        2%{?dist}
+Version:        0.5.1
+Release:        1%{?dist}
 Summary:        A process utilities module for Python
 
 Group:          Development/Languages
@@ -52,9 +52,6 @@ for file in psutil/*.py; do
   rm $file.orig
 done
 
-# Fix permissions
-chmod a-x docs/class_diagram.png
-
 %if 0%{?with_python3}
 rm -rf %{py3dir}
 cp -a . %{py3dir}
@@ -86,8 +83,7 @@ popd
 
  
 %files
-%defattr(-,root,root,-)
-%doc CREDITS HISTORY LICENSE README docs/
+%doc CREDITS HISTORY LICENSE README
 %{python_sitearch}/%{short_name}/
 %{python_sitearch}/*.egg-info
 %{python_sitearch}/*.so
@@ -95,8 +91,7 @@ popd
 
 %if 0%{?with_python3}
 %files -n python3-psutil
-%defattr(-,root,root,-)
-%doc CREDITS HISTORY LICENSE README docs/
+%doc CREDITS HISTORY LICENSE README
 %{python3_sitearch}/%{short_name}/
 %{python3_sitearch}/*.egg-info
 %{python3_sitearch}/*.so
@@ -104,6 +99,9 @@ popd
 
 
 %changelog
+* Sun Jul 01 2012 Mohamed El Morabity <melmorabity@fedoraproject.org> - 0.5.1-1
+- Update to 0.5.1
+
 * Sat Jan 14 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.4.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
