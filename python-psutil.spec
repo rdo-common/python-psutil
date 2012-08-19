@@ -8,9 +8,9 @@
 }
 
 Name:           python-psutil
-Version:        0.5.1
-Release:        3%{?dist}
-Summary:        A process utilities module for Python
+Version:        0.6.1
+Release:        1%{?dist}
+Summary:        A process and system utilities module for Python
 
 Group:          Development/Languages
 License:        BSD
@@ -23,22 +23,24 @@ BuildRequires:  python3-devel
 %endif
 
 %description
-psutil is a module providing an interface for retrieving information on running
-processes and system utilization (CPU, memory) in a portable way by using
-Python, implementing many functionalities offered by tools like ps, top and
-Windows task manager.
+psutil is a module providing an interface for retrieving information on all
+running processes and system utilization (CPU, memory, disks, network, users) in
+a portable way by using Python, implementing many functionalities offered by
+command line tools such as: ps, top, df, kill, free, lsof, free, netstat,
+ifconfig, nice, ionice, iostat, iotop, uptime, pidof, tty, who, taskset, pmap.
 
 
 %if 0%{?with_python3}
 %package -n python3-psutil
-Summary:        A process utilities module for Python 3
+Summary:        A process and system utilities module for Python 3
 Group:          Development/Languages
 
 %description -n python3-psutil
-psutil is a module providing an interface for retrieving information on running
-processes and system utilization (CPU, memory) in a portable way by using Python
-3, implementing many functionalities offered by tools like ps, top and Windows
-task manager.
+psutil is a module providing an interface for retrieving information on all
+running processes and system utilization (CPU, memory, disks, network, users) in
+a portable way by using Python 3, implementing many functionalities offered by
+command line tools such as: ps, top, df, kill, free, lsof, free, netstat,
+ifconfig, nice, ionice, iostat, iotop, uptime, pidof, tty, who, taskset, pmap.
 %endif
 
 
@@ -73,12 +75,18 @@ popd
   --skip-build \
   --root $RPM_BUILD_ROOT
 
+# Fix permissions
+chmod 0755 $RPM_BUILD_ROOT%{python_sitearch}/*.so
+
 %if 0%{?with_python3}
 pushd %{py3dir}
 %{__python3} setup.py install \
   --skip-build \
   --root $RPM_BUILD_ROOT
 popd
+
+# Fix permissions
+chmod 0755 $RPM_BUILD_ROOT%{python3_sitearch}/*.so
 %endif
 
  
@@ -99,6 +107,9 @@ popd
 
 
 %changelog
+* Sun Aug 19 2012 Mohamed El Morabity <melmorabity@fedorapeople.org> - 0.6.1-1
+- Update to 0.6.1
+
 * Sat Aug 04 2012 David Malcolm <dmalcolm@redhat.com> - 0.5.1-3
 - rebuild for https://fedoraproject.org/wiki/Features/Python_3.3
 
