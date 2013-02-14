@@ -9,7 +9,7 @@
 
 Name:           python-psutil
 Version:        0.6.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A process and system utilities module for Python
 
 Group:          Development/Languages
@@ -107,6 +107,9 @@ chmod 0755 $RPM_BUILD_ROOT%{python3_sitearch}/*.so
 
 
 %changelog
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.6.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Sun Aug 19 2012 Mohamed El Morabity <melmorabity@fedorapeople.org> - 0.6.1-1
 - Update to 0.6.1
 
