@@ -8,8 +8,8 @@
 }
 
 Name:           python-psutil
-Version:        0.7.1
-Release:        2%{?dist}
+Version:        1.0.1
+Release:        1%{?dist}
 Summary:        A process and system utilities module for Python
 
 Group:          Development/Languages
@@ -75,23 +75,17 @@ popd
   --skip-build \
   --root $RPM_BUILD_ROOT
 
-# Fix permissions
-chmod 0755 $RPM_BUILD_ROOT%{python_sitearch}/*.so
-
 %if 0%{?with_python3}
 pushd %{py3dir}
 %{__python3} setup.py install \
   --skip-build \
   --root $RPM_BUILD_ROOT
 popd
-
-# Fix permissions
-chmod 0755 $RPM_BUILD_ROOT%{python3_sitearch}/*.so
 %endif
 
  
 %files
-%doc CREDITS HISTORY LICENSE README
+%doc CREDITS HISTORY LICENSE README TODO
 %{python_sitearch}/%{short_name}/
 %{python_sitearch}/*.egg-info
 %{python_sitearch}/*.so
@@ -99,7 +93,7 @@ chmod 0755 $RPM_BUILD_ROOT%{python3_sitearch}/*.so
 
 %if 0%{?with_python3}
 %files -n python3-psutil
-%doc CREDITS HISTORY LICENSE README
+%doc CREDITS HISTORY LICENSE README TODO
 %{python3_sitearch}/%{short_name}/
 %{python3_sitearch}/*.egg-info
 %{python3_sitearch}/*.so
@@ -107,10 +101,13 @@ chmod 0755 $RPM_BUILD_ROOT%{python3_sitearch}/*.so
 
 
 %changelog
+* Fri Aug 16 2013 Mohamed El Morabity <melmorabity@fedoraproject.org> - 1.0.1-1
+- Update to 1.0.1
+
 * Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.7.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
-* Sun May 12 2013 Mohamed El Morabity - 0.7.1-1
+* Sun May 12 2013 Mohamed El Morabity <melmorabity@fedoraproject.org> - 0.7.1-1
 - Update to 0.7.1
 
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.6.1-2
