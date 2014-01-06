@@ -8,14 +8,14 @@
 }
 
 Name:           python-psutil
-Version:        1.0.1
+Version:        1.2.1
 Release:        1%{?dist}
 Summary:        A process and system utilities module for Python
 
 Group:          Development/Languages
 License:        BSD
 URL:            http://psutil.googlecode.com/
-Source0:        http://psutil.googlecode.com/files/%{short_name}-%{version}.tar.gz
+Source0:        https://pypi.python.org/packages/source/p/%{short_name}/%{short_name}-%{version}.tar.gz
 
 BuildRequires:  python2-devel
 %if 0%{?with_python3}
@@ -101,6 +101,9 @@ popd
 
 
 %changelog
+* Mon Jan 06 2014 Mohamed El Morabity <melmorabity@fedoraproject.org> - 1.2.1-1
+- Update to 1.2.1
+
 * Fri Aug 16 2013 Mohamed El Morabity <melmorabity@fedoraproject.org> - 1.0.1-1
 - Update to 1.0.1
 
