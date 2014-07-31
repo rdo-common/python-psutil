@@ -9,7 +9,7 @@
 
 Name:           python-psutil
 Version:        1.2.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A process and system utilities module for Python
 
 Group:          Development/Languages
@@ -85,7 +85,9 @@ popd
 
  
 %files
-%doc CREDITS HISTORY LICENSE README TODO
+%{!?_licensedir:%global license %%doc}
+%license LICENSE
+%doc CREDITS HISTORY README TODO
 %{python_sitearch}/%{short_name}/
 %{python_sitearch}/*.egg-info
 %{python_sitearch}/*.so
@@ -93,7 +95,9 @@ popd
 
 %if 0%{?with_python3}
 %files -n python3-psutil
-%doc CREDITS HISTORY LICENSE README TODO
+%{!?_licensedir:%global license %%doc}
+%license LICENSE
+%doc CREDITS HISTORY README TODO
 %{python3_sitearch}/%{short_name}/
 %{python3_sitearch}/*.egg-info
 %{python3_sitearch}/*.so
@@ -101,6 +105,9 @@ popd
 
 
 %changelog
+* Thu Jul 31 2014 Tom Callaway <spot@fedoraproject.org> - 1.2.1-4
+- fix license handling
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
