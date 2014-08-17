@@ -9,7 +9,7 @@
 
 Name:           python-psutil
 Version:        1.2.1
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A process and system utilities module for Python
 
 Group:          Development/Languages
@@ -105,6 +105,9 @@ popd
 
 
 %changelog
+* Sun Aug 17 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2.1-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
+
 * Thu Jul 31 2014 Tom Callaway <spot@fedoraproject.org> - 1.2.1-4
 - fix license handling
 
