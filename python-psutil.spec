@@ -8,7 +8,7 @@
 }
 
 Name:           python-psutil
-Version:        2.1.3
+Version:        2.2.0
 Release:        1%{?dist}
 Summary:        A process and system utilities module for Python
 
@@ -105,6 +105,9 @@ popd
 
 
 %changelog
+* Wed Feb 18 2015 Ralph Bean <rbean@redhat.com> - 2.2.0-1
+- new version
+
 * Wed Dec  3 2014 Michel Alexandre Salim <salimma@fedoraproject.org> - 2.1.3-1
 - Update to 2.1.3
 
