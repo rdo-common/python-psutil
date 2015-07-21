@@ -8,8 +8,8 @@
 }
 
 Name:           python-psutil
-Version:        2.2.0
-Release:        2%{?dist}
+Version:        3.1.1
+Release:        1%{?dist}
 Summary:        A process and system utilities module for Python
 
 Group:          Development/Languages
@@ -89,8 +89,9 @@ popd
 %license LICENSE
 %doc CREDITS HISTORY.rst README.rst TODO
 %{python_sitearch}/%{short_name}/
+%exclude %{python_sitearch}/%{short_name}/*.so
+%attr(0755,-,-) %{python_sitearch}/%{short_name}/*.so
 %{python_sitearch}/*.egg-info
-%{python_sitearch}/*.so
 
 
 %if 0%{?with_python3}
@@ -99,12 +100,16 @@ popd
 %license LICENSE
 %doc CREDITS HISTORY.rst README.rst TODO
 %{python3_sitearch}/%{short_name}/
+%exclude %{python3_sitearch}/%{short_name}/*.so
+%attr(0755,-,-) %{python3_sitearch}/%{short_name}/*.so
 %{python3_sitearch}/*.egg-info
-%{python3_sitearch}/*.so
 %endif
 
 
 %changelog
+* Tue Jul 21 2015 Michel Alexandre Salim <salimma@fedoraproject.org> - 3.1.1-1
+- Update to 3.1.1
+
 * Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.2.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
