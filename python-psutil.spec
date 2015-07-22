@@ -9,7 +9,7 @@
 
 Name:           python-psutil
 Version:        3.1.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A process and system utilities module for Python
 
 Group:          Development/Languages
@@ -18,8 +18,13 @@ URL:            http://psutil.googlecode.com/
 Source0:        https://pypi.python.org/packages/source/p/%{short_name}/%{short_name}-%{version}.tar.gz
 
 BuildRequires:  python2-devel
+# Test dependencies
+BuildRequires:  procps-ng
+BuildRequires:  python-mock
 %if 0%{?with_python3}
 BuildRequires:  python3-devel
+# Test dependencies
+BuildRequires:  python3-mock
 %endif
 
 %description
@@ -83,14 +88,23 @@ pushd %{py3dir}
 popd
 %endif
 
+
+%check
+# the main test target causes failures, investigating
+make test-memleaks
+
+%if 0%{?with_python3}
+pushd %{py3dir}
+make test-memleaks
+popd
+%endif
+
  
 %files
 %{!?_licensedir:%global license %%doc}
 %license LICENSE
 %doc CREDITS HISTORY.rst README.rst TODO
 %{python_sitearch}/%{short_name}/
-%exclude %{python_sitearch}/%{short_name}/*.so
-%attr(0755,-,-) %{python_sitearch}/%{short_name}/*.so
 %{python_sitearch}/*.egg-info
 
 
@@ -100,13 +114,15 @@ popd
 %license LICENSE
 %doc CREDITS HISTORY.rst README.rst TODO
 %{python3_sitearch}/%{short_name}/
-%exclude %{python3_sitearch}/%{short_name}/*.so
-%attr(0755,-,-) %{python3_sitearch}/%{short_name}/*.so
 %{python3_sitearch}/*.egg-info
 %endif
 
 
 %changelog
+* Wed Jul 22 2015 Michel Alexandre Salim <salimma@fedoraproject.org> - 3.1.1-2
+- Restore *.so files
+- Enable tests
+
 * Tue Jul 21 2015 Michel Alexandre Salim <salimma@fedoraproject.org> - 3.1.1-1
 - Update to 3.1.1
 
