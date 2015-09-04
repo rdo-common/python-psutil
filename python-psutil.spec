@@ -9,7 +9,7 @@
 
 Name:           python-%{srcname}
 Version:        3.2.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        %{sum}
 
 License:        BSD
@@ -34,6 +34,7 @@ ifconfig, nice, ionice, iostat, iotop, uptime, pidof, tty, who, taskset, pmap.
 %package -n python2-%{srcname}
 Summary:        %{sum}
 %{?python_provide:%python_provide python2-%{srcname}}
+Obsoletes:      python-%{srcname} < 3.1.1-3
 
 %description -n python2-psutil
 psutil is a module providing an interface for retrieving information on all
@@ -98,6 +99,9 @@ make test-memleaks PYTHON=%{__python3}
 
 
 %changelog
+* Fri Sep  4 2015 Michel Alexandre Salim <salimma@fedoraproject.org> - 3.2.1-2
+- Add Obsoletes for old package
+
 * Fri Sep  4 2015 Michel Alexandre Salim <salimma@fedoraproject.org> - 3.2.1-1
 - Update to 3.2.1
 - Update to latest Python guidelines (https://fedorahosted.org/fpc/ticket/281)
