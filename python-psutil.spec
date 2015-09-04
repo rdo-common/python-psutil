@@ -1,5 +1,5 @@
-%global with_python3 1
-%global short_name psutil
+%global srcname psutil
+%global sum A process and system utilities module for Python
 
 # Filter Python modules from Provides
 %{?filter_setup:
@@ -7,25 +7,21 @@
 %filter_setup
 }
 
-Name:           python-psutil
-Version:        3.1.1
-Release:        2%{?dist}
-Summary:        A process and system utilities module for Python
+Name:           python-%{srcname}
+Version:        3.2.1
+Release:        1%{?dist}
+Summary:        %{sum}
 
-Group:          Development/Languages
 License:        BSD
 URL:            http://psutil.googlecode.com/
-Source0:        https://pypi.python.org/packages/source/p/%{short_name}/%{short_name}-%{version}.tar.gz
+Source0:        https://pypi.python.org/packages/source/p/%{srcname}/%{srcname}-%{version}.tar.gz
 
 BuildRequires:  python2-devel
+BuildRequires:  python3-devel
 # Test dependencies
 BuildRequires:  procps-ng
 BuildRequires:  python-mock
-%if 0%{?with_python3}
-BuildRequires:  python3-devel
-# Test dependencies
 BuildRequires:  python3-mock
-%endif
 
 %description
 psutil is a module providing an interface for retrieving information on all
@@ -35,10 +31,20 @@ command line tools such as: ps, top, df, kill, free, lsof, free, netstat,
 ifconfig, nice, ionice, iostat, iotop, uptime, pidof, tty, who, taskset, pmap.
 
 
-%if 0%{?with_python3}
+%package -n python2-%{srcname}
+Summary:        %{sum}
+%{?python_provide:%python_provide python2-%{srcname}}
+
+%description -n python2-psutil
+psutil is a module providing an interface for retrieving information on all
+running processes and system utilization (CPU, memory, disks, network, users) in
+a portable way by using Python 3, implementing many functionalities offered by
+command line tools such as: ps, top, df, kill, free, lsof, free, netstat,
+ifconfig, nice, ionice, iostat, iotop, uptime, pidof, tty, who, taskset, pmap.
+
 %package -n python3-psutil
-Summary:        A process and system utilities module for Python 3
-Group:          Development/Languages
+Summary:        %{sum}
+%{?python_provide:%python_provide python3-%{srcname}}
 
 %description -n python3-psutil
 psutil is a module providing an interface for retrieving information on all
@@ -46,11 +52,10 @@ running processes and system utilization (CPU, memory, disks, network, users) in
 a portable way by using Python 3, implementing many functionalities offered by
 command line tools such as: ps, top, df, kill, free, lsof, free, netstat,
 ifconfig, nice, ionice, iostat, iotop, uptime, pidof, tty, who, taskset, pmap.
-%endif
 
 
 %prep
-%setup -q -n %{short_name}-%{version}
+%autosetup -n %{srcname}-%{version}
 
 # Remove shebangs
 for file in psutil/*.py; do
@@ -59,66 +64,44 @@ for file in psutil/*.py; do
   rm $file.orig
 done
 
-%if 0%{?with_python3}
-rm -rf %{py3dir}
-cp -a . %{py3dir}
-%endif
-
 
 %build
-CFLAGS=$RPM_OPT_FLAGS %{__python} setup.py build
-
-%if 0%{?with_python3}
-pushd %{py3dir}
-CFLAGS=$RPM_OPT_FLAGS %{__python3} setup.py build
-popd
-%endif
+%py2_build
+%py3_build
 
 
 %install
-%{__python} setup.py install \
-  --skip-build \
-  --root $RPM_BUILD_ROOT
-
-%if 0%{?with_python3}
-pushd %{py3dir}
-%{__python3} setup.py install \
-  --skip-build \
-  --root $RPM_BUILD_ROOT
-popd
-%endif
+%py2_install
+%py3_install
 
 
 %check
 # the main test target causes failures, investigating
-make test-memleaks
-
-%if 0%{?with_python3}
-pushd %{py3dir}
-make test-memleaks
-popd
-%endif
+make test-memleaks PYTHON=%{__python2}
+make test-memleaks PYTHON=%{__python3}
 
  
-%files
+%files -n python2-%{srcname}
 %{!?_licensedir:%global license %%doc}
 %license LICENSE
 %doc CREDITS HISTORY.rst README.rst TODO
-%{python_sitearch}/%{short_name}/
-%{python_sitearch}/*.egg-info
+%{python2_sitearch}/%{srcname}/
+%{python2_sitearch}/*.egg-info
 
 
-%if 0%{?with_python3}
-%files -n python3-psutil
+%files -n python3-%{srcname}
 %{!?_licensedir:%global license %%doc}
 %license LICENSE
 %doc CREDITS HISTORY.rst README.rst TODO
-%{python3_sitearch}/%{short_name}/
+%{python3_sitearch}/%{srcname}/
 %{python3_sitearch}/*.egg-info
-%endif
 
 
 %changelog
+* Fri Sep  4 2015 Michel Alexandre Salim <salimma@fedoraproject.org> - 3.2.1-1
+- Update to 3.2.1
+- Update to latest Python guidelines (https://fedorahosted.org/fpc/ticket/281)
+
 * Wed Jul 22 2015 Michel Alexandre Salim <salimma@fedoraproject.org> - 3.1.1-2
 - Restore *.so files
 - Enable tests
