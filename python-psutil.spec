@@ -9,7 +9,7 @@
 
 Name:           python-%{srcname}
 Version:        3.2.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        %{sum}
 
 License:        BSD
@@ -99,6 +99,9 @@ make test-memleaks PYTHON=%{__python3}
 
 
 %changelog
+* Tue Nov 10 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.2.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Changes/python3.5
+
 * Fri Sep  4 2015 Michel Alexandre Salim <salimma@fedoraproject.org> - 3.2.1-2
 - Add Obsoletes for old package
 
