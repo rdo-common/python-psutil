@@ -9,12 +9,13 @@
 
 Name:           python-%{srcname}
 Version:        3.2.1
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        %{sum}
 
 License:        BSD
 URL:            http://psutil.googlecode.com/
 Source0:        https://pypi.python.org/packages/source/p/%{srcname}/%{srcname}-%{version}.tar.gz
+Patch0:         python-psutil-endian.patch
 
 BuildRequires:  python2-devel
 BuildRequires:  python3-devel
@@ -56,7 +57,7 @@ ifconfig, nice, ionice, iostat, iotop, uptime, pidof, tty, who, taskset, pmap.
 
 
 %prep
-%autosetup -n %{srcname}-%{version}
+%autosetup -p1 -n %{srcname}-%{version}
 
 # Remove shebangs
 for file in psutil/*.py; do
@@ -99,6 +100,9 @@ make test-memleaks PYTHON=%{__python3}
 
 
 %changelog
+* Fri Mar 11 2016 Than Ngo <than@redhat.com> - 3.2.1-5
+- fix endian issue on s390x/ppc64
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 3.2.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
