@@ -2,27 +2,24 @@
 %global sum A process and system utilities module for Python
 
 # Filter Python modules from Provides
-%{?filter_setup:
-%filter_provides_in %{python_sitearch}/.*\.so$
-%filter_setup
-}
+%global __provides_exclude_from ^(%{python2_sitearch}|%{python3_sitearch})/.*\\.so$
 
 Name:           python-%{srcname}
 Version:        3.2.1
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        %{sum}
 
 License:        BSD
-URL:            http://psutil.googlecode.com/
+URL:            https://github.com/giampaolo/psutil
 Source0:        https://pypi.python.org/packages/source/p/%{srcname}/%{srcname}-%{version}.tar.gz
 Patch0:         python-psutil-endian.patch
 
 BuildRequires:  python2-devel
-BuildRequires:  python3-devel
+BuildRequires:  python%{python3_pkgversion}-devel
 # Test dependencies
 BuildRequires:  procps-ng
 BuildRequires:  python-mock
-BuildRequires:  python3-mock
+BuildRequires:  python%{python3_pkgversion}-mock
 
 %description
 psutil is a module providing an interface for retrieving information on all
@@ -44,11 +41,11 @@ a portable way by using Python 3, implementing many functionalities offered by
 command line tools such as: ps, top, df, kill, free, lsof, free, netstat,
 ifconfig, nice, ionice, iostat, iotop, uptime, pidof, tty, who, taskset, pmap.
 
-%package -n python3-psutil
+%package -n python%{python3_pkgversion}-psutil
 Summary:        %{sum}
-%{?python_provide:%python_provide python3-%{srcname}}
+%{?python_provide:%python_provide python%{python3_pkgversion}-%{srcname}}
 
-%description -n python3-psutil
+%description -n python%{python3_pkgversion}-psutil
 psutil is a module providing an interface for retrieving information on all
 running processes and system utilization (CPU, memory, disks, network, users) in
 a portable way by using Python 3, implementing many functionalities offered by
@@ -84,15 +81,13 @@ make test-memleaks PYTHON=%{__python3}
 
  
 %files -n python2-%{srcname}
-%{!?_licensedir:%global license %%doc}
 %license LICENSE
 %doc CREDITS HISTORY.rst README.rst TODO
 %{python2_sitearch}/%{srcname}/
 %{python2_sitearch}/*.egg-info
 
 
-%files -n python3-%{srcname}
-%{!?_licensedir:%global license %%doc}
+%files -n python%{python3_pkgversion}-%{srcname}
 %license LICENSE
 %doc CREDITS HISTORY.rst README.rst TODO
 %{python3_sitearch}/%{srcname}/
@@ -100,6 +95,11 @@ make test-memleaks PYTHON=%{__python3}
 
 
 %changelog
+* Mon May 16 2016 Orion Poplawski <orion@cora.nwra.com> - 3.2.1-6
+- Use modern provides filter
+- Update URL
+- Use %%python3_pkgversion for EPEL7 compat
+
 * Fri Mar 11 2016 Than Ngo <than@redhat.com> - 3.2.1-5
 - fix endian issue on s390x/ppc64
 
