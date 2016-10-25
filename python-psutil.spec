@@ -5,7 +5,7 @@
 %global __provides_exclude_from ^(%{python2_sitearch}|%{python3_sitearch})/.*\\.so$
 
 Name:           python-%{srcname}
-Version:        4.3.1
+Version:        4.4.0
 Release:        1%{?dist}
 Summary:        %{sum}
 
@@ -19,6 +19,7 @@ BuildRequires:  python%{python3_pkgversion}-devel
 BuildRequires:  procps-ng
 BuildRequires:  python-mock
 BuildRequires:  python%{python3_pkgversion}-mock
+BuildRequires:  python-ipaddress
 
 %description
 psutil is a module providing an interface for retrieving information on all
@@ -94,6 +95,9 @@ make test-memleaks PYTHON=%{__python3}
 
 
 %changelog
+* Tue Oct 25 2016 Kevin Fenzi <kevin@scrye.com> - 4.4.0-1
+- Update to 4.4.0. Fixes bug #1387942
+
 * Sat Sep 03 2016 Kevin Fenzi <kevin@scrye.com> - 4.3.1-1
 - Update to 4.3.1. Fixes bug #1372500
 
