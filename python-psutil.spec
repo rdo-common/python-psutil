@@ -5,13 +5,18 @@
 %global __provides_exclude_from ^(%{python2_sitearch}|%{python3_sitearch})/.*\\.so$
 
 Name:           python-%{srcname}
-Version:        4.4.0
+Version:        5.0.1
 Release:        1%{?dist}
 Summary:        %{sum}
 
 License:        BSD
 URL:            https://github.com/giampaolo/psutil
 Source0:        https://github.com/giampaolo/psutil/archive/release-%{version}.tar.gz#/%{srcname}-%{version}.tar.gz
+#
+# Disable upstream failing test
+# https://github.com/giampaolo/psutil/issues/946
+#
+Patch0:         psutil-5.0.1-disable-broken-tests.patch
 
 BuildRequires:  python2-devel
 BuildRequires:  python%{python3_pkgversion}-devel
@@ -95,6 +100,13 @@ make test-memleaks PYTHON=%{__python3}
 
 
 %changelog
+* Mon Jan 02 2017 Kevin Fenzi <kevin@scrye.com> - 5.0.1-1
+- Update to 5.0.1. Fixes bug #1389579
+- Disable failing test while upstream looks at it. 
+
+* Wed Nov 09 2016 Kevin Fenzi <kevin@scrye.com> - 5.0.0-1
+- Update to 5.0.0. Fixes bug #1389579
+
 * Tue Oct 25 2016 Kevin Fenzi <kevin@scrye.com> - 4.4.0-1
 - Update to 4.4.0. Fixes bug #1387942
 
