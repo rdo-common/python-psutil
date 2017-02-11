@@ -6,7 +6,7 @@
 
 Name:           python-%{srcname}
 Version:        5.0.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        %{sum}
 
 License:        BSD
@@ -100,6 +100,9 @@ make test-memleaks PYTHON=%{__python3}
 
 
 %changelog
+* Sat Feb 11 2017 Fedora Release Engineering <releng@fedoraproject.org> - 5.0.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Mon Jan 02 2017 Kevin Fenzi <kevin@scrye.com> - 5.0.1-1
 - Update to 5.0.1. Fixes bug #1389579
 - Disable failing test while upstream looks at it. 
