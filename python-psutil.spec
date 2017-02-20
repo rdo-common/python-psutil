@@ -4,6 +4,10 @@
 # Filter Python modules from Provides
 %global __provides_exclude_from ^(%{python2_sitearch}|%{python3_sitearch})/.*\\.so$
 
+%if 0%{?fedora}
+%global with_python3 1
+%endif
+
 Name:           python-%{srcname}
 Version:        5.2.2
 Release:        1%{?dist}
@@ -19,11 +23,10 @@ Source0:        https://github.com/giampaolo/psutil/archive/release-%{version}.t
 Patch0:         psutil-5.0.1-disable-broken-tests.patch
 
 BuildRequires:  python2-devel
-BuildRequires:  python%{python3_pkgversion}-devel
+BuildRequires:  python-setuptools
 # Test dependencies
 BuildRequires:  procps-ng
 BuildRequires:  python-mock
-BuildRequires:  python%{python3_pkgversion}-mock
 BuildRequires:  python-ipaddress
 
 %description
@@ -46,8 +49,12 @@ a portable way by using Python 3, implementing many functionalities offered by
 command line tools such as: ps, top, df, kill, free, lsof, free, netstat,
 ifconfig, nice, ionice, iostat, iotop, uptime, pidof, tty, who, taskset, pmap.
 
+%if 0%{?with_python3}
 %package -n python%{python3_pkgversion}-psutil
 Summary:        %{sum}
+BuildRequires:  python%{python3_pkgversion}-devel
+BuildRequires:  python%{python3_pkgversion}-setuptools
+BuildRequires:  python%{python3_pkgversion}-mock
 %{?python_provide:%python_provide python%{python3_pkgversion}-%{srcname}}
 
 %description -n python%{python3_pkgversion}-psutil
@@ -56,6 +63,7 @@ running processes and system utilization (CPU, memory, disks, network, users) in
 a portable way by using Python 3, implementing many functionalities offered by
 command line tools such as: ps, top, df, kill, free, lsof, free, netstat,
 ifconfig, nice, ionice, iostat, iotop, uptime, pidof, tty, who, taskset, pmap.
+%endif
 
 
 %prep
@@ -71,18 +79,24 @@ done
 
 %build
 %py2_build
+%if 0%{?with_python3}
 %py3_build
+%endif
 
 
 %install
 %py2_install
+%if 0%{?with_python3}
 %py3_install
+%endif
 
 
 %check
 # the main test target causes failures, investigating
 make test-memleaks PYTHON=%{__python2}
+%if 0%{?with_python3}
 make test-memleaks PYTHON=%{__python3}
+%endif
 
  
 %files -n python2-%{srcname}
@@ -92,11 +106,13 @@ make test-memleaks PYTHON=%{__python3}
 %{python2_sitearch}/*.egg-info
 
 
+%if 0%{?with_python3}
 %files -n python%{python3_pkgversion}-%{srcname}
 %license LICENSE
 %doc CREDITS HISTORY.rst README.rst
 %{python3_sitearch}/%{srcname}/
 %{python3_sitearch}/*.egg-info
+%endif
 
 
 %changelog
