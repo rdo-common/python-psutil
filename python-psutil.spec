@@ -5,7 +5,7 @@
 %global __provides_exclude_from ^(%{python2_sitearch}|%{python3_sitearch})/.*\\.so$
 
 Name:           python-%{srcname}
-Version:        5.2.1
+Version:        5.2.2
 Release:        1%{?dist}
 Summary:        %{sum}
 
@@ -100,6 +100,9 @@ make test-memleaks PYTHON=%{__python3}
 
 
 %changelog
+* Sun Apr 23 2017 Kevin Fenzi <kevin@scrye.com> - 5.2.2-1
+- Update to 5.2.2. Fixes bug #1441010
+
 * Sat Mar 25 2017 Kevin Fenzi <kevin@scrye.com> - 5.2.1-1
 - Update to 5.2.1. Fixes bug #1418489
 
