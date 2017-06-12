@@ -93,6 +93,10 @@ done
 
 %check
 # the main test target causes failures, investigating
+# the CBS buildroot is running on a CentOS 6 kernel,
+# which exposes a different /sys interface to what psutils is expecting on
+# https://github.com/giampaolo/psutil/blob/0a6953cfd59009b422b808b2c59e37077c0bdcb1/psutil/_pslinux.py#L1137-L1141
+sed -i '/test_sensors_temperatures/i \    @unittest.skip("incompatible sysfs")' psutil/tests/test_memory_leaks.py
 make test-memleaks PYTHON=%{__python2}
 %if 0%{?with_python3}
 make test-memleaks PYTHON=%{__python3}
