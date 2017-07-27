@@ -6,7 +6,7 @@
 
 Name:           python-%{srcname}
 Version:        5.2.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        %{sum}
 
 License:        BSD
@@ -100,6 +100,9 @@ make test-memleaks PYTHON=%{__python3}
 
 
 %changelog
+* Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 5.2.2-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
 * Sun Apr 23 2017 Kevin Fenzi <kevin@scrye.com> - 5.2.2-1
 - Update to 5.2.2. Fixes bug #1441010
 
