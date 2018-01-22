@@ -6,7 +6,7 @@
 
 Name:           python-%{srcname}
 Version:        5.4.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        %{sum}
 
 License:        BSD
@@ -100,6 +100,9 @@ make test-memleaks PYTHON=%{__python3}
 
 
 %changelog
+* Mon Jan 22 2018 Gwyn Ciesla <limburgher@gmail.com> - 5.4.3-2
+- Updated test patch.
+
 * Mon Jan 22 2018 Gwyn Ciesla <limburgher@gmail.com> - 5.4.3-1
 - 5.4.3
 
