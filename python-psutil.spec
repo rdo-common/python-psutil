@@ -5,8 +5,8 @@
 %global __provides_exclude_from ^(%{python2_sitearch}|%{python3_sitearch})/.*\\.so$
 
 Name:           python-%{srcname}
-Version:        5.2.2
-Release:        3%{?dist}
+Version:        5.4.3
+Release:        1%{?dist}
 Summary:        %{sum}
 
 License:        BSD
@@ -16,7 +16,7 @@ Source0:        https://github.com/giampaolo/psutil/archive/release-%{version}.t
 # Disable upstream failing test
 # https://github.com/giampaolo/psutil/issues/946
 #
-Patch0:         psutil-5.0.1-disable-broken-tests.patch
+Patch0:         psutil-5.4.3-disable-broken-tests.patch
 
 BuildRequires:  python2-devel
 BuildRequires:  python%{python3_pkgversion}-devel
@@ -59,7 +59,7 @@ ifconfig, nice, ionice, iostat, iotop, uptime, pidof, tty, who, taskset, pmap.
 
 
 %prep
-%autosetup -p1 -n %{srcname}-release-%{version}
+%autosetup -p0 -n %{srcname}-release-%{version}
 
 # Remove shebangs
 find psutil -name \*.py | while read file; do
@@ -100,6 +100,9 @@ make test-memleaks PYTHON=%{__python3}
 
 
 %changelog
+* Mon Jan 22 2018 Gwyn Ciesla <limburgher@gmail.com> - 5.4.3-1
+- 5.4.3
+
 * Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 5.2.2-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
