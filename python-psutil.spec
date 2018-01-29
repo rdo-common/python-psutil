@@ -6,7 +6,7 @@
 
 Name:           python-%{srcname}
 Version:        5.4.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        %{sum}
 
 License:        BSD
@@ -22,9 +22,9 @@ BuildRequires:  python2-devel
 BuildRequires:  python%{python3_pkgversion}-devel
 # Test dependencies
 BuildRequires:  procps-ng
-BuildRequires:  python-mock
+BuildRequires:  python2-mock
 BuildRequires:  python%{python3_pkgversion}-mock
-BuildRequires:  python-ipaddress
+BuildRequires:  python2-ipaddress
 
 %description
 psutil is a module providing an interface for retrieving information on all
@@ -100,6 +100,10 @@ done
 
 
 %changelog
+* Mon Jan 29 2018 Iryna Shcherbina <ishcherb@redhat.com> - 5.4.3-3
+- Update Python 2 dependency declarations to new packaging standards
+  (See https://fedoraproject.org/wiki/FinalizingFedoraSwitchtoPython3)
+
 * Mon Jan 22 2018 Gwyn Ciesla <limburgher@gmail.com> - 5.4.3-2
 - Disable tests entirely.
 
