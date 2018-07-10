@@ -18,6 +18,7 @@ Source0:        https://github.com/giampaolo/psutil/archive/release-%{version}.t
 #
 #Patch0:         psutil-5.4.3-disable-broken-tests.patch
 
+BuildRequires:  gcc
 BuildRequires:  python2-devel
 BuildRequires:  python%{python3_pkgversion}-devel
 # Test dependencies
