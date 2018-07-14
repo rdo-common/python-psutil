@@ -6,7 +6,7 @@
 
 Name:           python-%{srcname}
 Version:        5.4.3
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        %{sum}
 
 License:        BSD
@@ -101,6 +101,9 @@ done
 
 
 %changelog
+* Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 5.4.3-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
 * Sun Jun 17 2018 Miro Hrončok <mhroncok@redhat.com> - 5.4.3-5
 - Rebuilt for Python 3.7
 
