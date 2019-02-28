@@ -5,8 +5,8 @@
 %global __provides_exclude_from ^(%{python2_sitearch}|%{python3_sitearch})/.*\\.so$
 
 Name:           python-%{srcname}
-Version:        5.4.3
-Release:        7%{?dist}
+Version:        5.5.1
+Release:        1%{?dist}
 Summary:        %{sum}
 
 License:        BSD
@@ -101,6 +101,9 @@ done
 
 
 %changelog
+* Thu Feb 28 2019 Yatin Karel <ykarel@redhat.com> - 5.5.1-1
+- Update to 5.5.1 (Resolves #1567102)
+
 * Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 5.4.3-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
